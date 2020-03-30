@@ -11,19 +11,15 @@
   align-items: flex-start
   @media(max-width: 450px)
     padding: 10px 0
-
   i
     position: absolute
     left: calc(100% - 35px)
     top: -15px
     font-size: 54px
-
   .reject
     color: red
-
   .resolve
     color: green
-
   .btnsContainer
     margin: 5px 0
     align-self: stretch
@@ -31,7 +27,6 @@
     flex-direction: row
     align-items: center
     justify-content: space-between
-
     .resolveBtn
       width: 100px
       cursor: pointer
@@ -40,10 +35,8 @@
       border-radius: 8px
       background-color: #8aca6b
       color: white
-
       &:hover
-        background-color: rgba(138, 202, 107, 0.7)
-
+        background-color: rgba(138, 202, 107,0.7)
     .rejectBtn
       text-align: center
       cursor: pointer
@@ -53,10 +46,8 @@
       background-color: #CD5C5C
       color: white
       margin: 0 25px
-
       &:hover
-        background-color: rgba(205, 92, 92, 0.7)
-
+        background-color: rgba(205, 92, 92,0.7)
   .mainInfoContainer
     align-self: stretch
     display: flex
@@ -66,10 +57,8 @@
     position: relative
     @media(max-width: 500px)
       flex-direction: column
-
     .userInfo
       min-width: 215px
-
     i
       cursor: pointer
       position: absolute
@@ -84,11 +73,9 @@
         align-self: flex-end
       @media(max-width: 500px)
         align-self: flex-end
-
       &:hover
         font-size: 34px
         transition: font-size 0.2s
-
     .responseConainer
       width: 70%
       align-self: center
@@ -99,11 +86,9 @@
       @media(max-width: 800px)
         margin-top: 10px
         max-width: 200px
-
       .responseLogo
         width: auto
         height: 100px
-
       .response
         text-align: center
         overflow-wrap: break-word
@@ -112,35 +97,29 @@
         color: #556da5
         margin-bottom: 10px
         font-size: 18px
-
     .creativeRating
       display: flex
       margin-top: 5px
       align-items: center
-
       .userScoreLabel
         margin-right: 10px
-        color: #556da5
+        color:  #556da5
         font-size: 15px
-
     .creativeInfoContainer
       display: flex
       flex-direction: row
       align-items: center
       justify-content: flex-start
-
       .nameAndEmail
         display: flex
         flex-direction: column
         align-items: flex-start
         justify-content: flex-start
-
         span
           color: #556da5
           font-size: 16px
           font-weight: 500
           margin-left: 10px
-
       img
         width: 50px
         height: 50px
