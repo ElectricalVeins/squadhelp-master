@@ -57,7 +57,6 @@ module.exports.onlyForCustomer = (req, res, next) => {
   } else {
     next();
   }
-
 };
 
 module.exports.canSendOffer = async (req, res, next) => {

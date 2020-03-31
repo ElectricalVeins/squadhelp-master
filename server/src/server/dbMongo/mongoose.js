@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const env = process.env.NODE_ENV || 'development';
-const configPath = env === 'production' ? path.join(__dirname, '..', '..', '..',
-  'src/server/config/mongoConfig.json') : path.join(__dirname, '..',
-  '/config/mongoConfig.json');
+const configPath = path.join(__dirname, '..',
+  'config/mongoConfig.json');
 const config = require(configPath)[ env ];
 
-mongoose.connect(`mongodb://${ config.host }:27017/${ config.database }`,
+mongoose.connect(
+  `mongodb://${ config.host }:${ config.port }/${ config.database }`,
   { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
     if (err) {
       process.exit(1);
@@ -14,6 +14,6 @@ mongoose.connect(`mongodb://${ config.host }:27017/${ config.database }`,
 
   });
 
-mongoose.set('debug', true);
+mongoose.set('debug', env === 'development');
 
 module.exports = mongoose;
