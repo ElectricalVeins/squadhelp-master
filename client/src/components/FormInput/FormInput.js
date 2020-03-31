@@ -3,10 +3,16 @@ import classNames from 'classnames';
 
 const FormInput = (props) => {
     const {label, input, type, classes, meta: {touched, error}} = props;
+
+    const computedClasses=classNames(classes.input, {
+      [classes.notValid]: (touched && error),
+      [classes.valid]: (touched && !error),
+    });
+
     return (
         <div className={classes.container}>
             <input {...input} placeholder={label} type={type}
-                   className={classNames(classes.input, {[classes.notValid]: touched && error})}/>
+                   className={computedClasses}/>
             {classes.warning && (touched && (error && <span className={classes.warning}>{error}</span>))}
         </div>
     )
