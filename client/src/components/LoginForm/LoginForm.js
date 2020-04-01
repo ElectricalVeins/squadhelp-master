@@ -6,7 +6,6 @@ import { Field, reduxForm }           from 'redux-form';
 import FormInput                      from '../FormInput/FormInput';
 import customValidator                from '../../validators/validator';
 import Schemes                        from '../../validators/validationSchems';
-import Error                          from '../../components/Error/Error';
 
 class LoginForm extends React.Component {
 
@@ -19,26 +18,18 @@ class LoginForm extends React.Component {
   };
 
   render() {
-    const { auth: { error, isFetching } } = this.props;
-    const { handleSubmit, submitting, authClear } = this.props;
+    const { auth: { isFetching }, handleSubmit, submitting } = this.props;
 
     const formInputClasses = {
-      containerClassName: styles.inputContainer,
-      inputClassName: styles.input,
-      warningClassName: styles.fieldWarning,
-      notValidClassName: styles.notValid,
-      validClassName: styles.valid,
+      containerStyles: styles.inputContainer,
+      inputStyles: styles.input,
+      warningStyles: styles.fieldWarning,
+      invalidStyles: styles.notValid,
+      validStyles: styles.valid,
     };
 
     return (
-      <div className={styles.loginForm}>
-        {
-          error && <Error data={error.data}
-                          status={error.status}
-                          clearError={authClear}/>
-        }
-
-        <form onSubmit={handleSubmit( this.handleSubmit )}>
+        <form className={styles.loginForm} onSubmit={handleSubmit( this.handleSubmit )}>
           <Field
             name='email'
             {...formInputClasses}
@@ -60,7 +51,6 @@ class LoginForm extends React.Component {
                                                   : 'LOGIN'}</span>
           </button>
         </form>
-      </div>
     );
   }
 }
