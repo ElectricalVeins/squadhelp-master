@@ -46,9 +46,7 @@ const RegistrationPage = ( props ) => {
           </h4>
         </div>
 
-
         <RegistrationForm/>
-
 
       </div>
       <div className={styles.footer}>
