@@ -1,23 +1,23 @@
 import React from 'react';
 import styles from './Header.module.sass';
-import {connect} from 'react-redux';
-import {Link, withRouter} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, withRouter } from 'react-router-dom';
 import CONSTANTS from '../../constants';
 import {getUserAction, clearUserStore, headerRequest} from '../../actions/actionCreator';
 
 
-class Header extends React.Component {
-    componentDidMount() {
-        if (!this.props.data) {
-            this.props.getUser();
-        }
+class Header extends React.Component{
+  componentDidMount () {
+    if ( !this.props.data) {
+      this.props.getUser();
     }
+  }
 
-    logOut = () => {
-        localStorage.clear();
-        this.props.clearUserStore();
-        this.props.history.replace('/login');
-    };
+  logOut = () => {
+    localStorage.clear();
+    this.props.clearUserStore();
+    this.props.history.replace('/login');
+  };
 
     startContests = () => {
         this.props.history.push('/startContest');
@@ -159,13 +159,13 @@ class Header extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return state.userStore;
+  return state.userStore;
 };
 const mapDispatchToProps = (dispatch) => {
-    return {
-        getUser: () => dispatch(headerRequest()),
-        clearUserStore: () => dispatch(clearUserStore())
-    }
+  return {
+    getUser: () => dispatch(headerRequest()),
+    clearUserStore: () => dispatch(clearUserStore()),
+  };
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
