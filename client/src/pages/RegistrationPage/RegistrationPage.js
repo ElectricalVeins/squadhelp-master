@@ -1,13 +1,13 @@
 import React                        from 'react';
 import Logo                         from '../../components/Logo';
-import RegistrationForm
-                                    from '../../components/RegistrationForm/RegistrationForm';
+import RegistrationForm             from '../../components/RegistrationForm/RegistrationForm';
 import styles                       from './RegistrationPage.module.sass';
 import { Link }                     from 'react-router-dom';
 import { connect }                  from 'react-redux';
 import { clearErrorSignUpAndLogin } from '../../actions/actionCreator';
 import CONSTANTS                    from '../../constants';
 import faq                          from './faq.json'
+import Question                     from "../../components/Question";
 
 
 const RegistrationPage = ( props ) => {
@@ -15,13 +15,11 @@ const RegistrationPage = ( props ) => {
   props.clearError();
 
   const faqElements = faq.map( ( question, index ) => (
-      <div key={index}>
-        <div className={styles.headerArticle}>{question.head}
-        </div>
-        <div className={styles.article}>
-          {question.body}
-        </div>
-      </div>
+      <Question key={index}
+                body={question.body}
+                head={question.head}
+                headerClassName={styles.headerArticle}
+                bodyClassName={styles.article}/>
     )
   );
 
@@ -37,7 +35,7 @@ const RegistrationPage = ( props ) => {
             </Link>
           </div>
         </div>
-        <div className={ styles.headerFormContainer }>
+        <div className={styles.headerFormContainer}>
           <h2>
             CREATE AN ACCOUNT
           </h2>
