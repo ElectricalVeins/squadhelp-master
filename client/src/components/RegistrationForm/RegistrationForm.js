@@ -1,125 +1,127 @@
-import React from 'react';
-import Error from '../Error/Error';
-import { connect } from 'react-redux';
+import React                             from 'react';
+import Error                             from '../Error/Error';
+import { connect }                       from 'react-redux';
 import { authActionRegister, clearAuth } from '../../actions/actionCreator';
-import styles from './RegistrationForm.module.sass';
-import { Field, reduxForm } from 'redux-form';
-import FormInput from '../FormInput/FormInput';
-import RoleInput from '../RoleInput/RoleInput';
+import styles                            from './RegistrationForm.module.sass';
+import { Field, reduxForm }              from 'redux-form';
+import FormInput                         from '../FormInput/FormInput';
+import RoleInput                         from '../RoleInput/RoleInput';
 import AgreeTermOfServiceInput
-  from '../AgreeTermOfServiceInput/AgreeTermOfServiceInput';
-import CONSTANTS from '../../constants';
-import customValidator from '../../validators/validator';
-import Schemes         from '../../validators/validationSchems';
+                                         from '../AgreeTermOfServiceInput/AgreeTermOfServiceInput';
+import CONSTANTS                         from '../../constants';
+import customValidator                   from '../../validators/validator';
+import Schemes                           from '../../validators/validationSchems';
 
-class RegistrationForm extends React.Component{
+class RegistrationForm extends React.Component {
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     this.props.authClear();
   }
 
-  handleSubmit = ( values) => {
-    this.props.signUp({
+  handleSubmit = ( values ) => {
+    this.props.signUp( {
       firstName: values.firstName,
       lastName: values.lastName,
       displayName: values.displayName,
       email: values.email,
       password: values.password,
       role: values.role,
-    });
+    } );
   };
 
-  render () {
-    const {handleSubmit, submitting, auth, authClear} = this.props;
-    const {error} = auth;
-    const formInputClasses = {
-      container: styles.inputContainer,
-      input: styles.input,
-      warning: styles.fieldWarning,
-      notValid: styles.notValid,
-      valid: styles.valid,
-    };
-    return (
-      <div className={ styles.signUpFormContainer }>
-        { error && <Error data={ error.data }
-                          status={ error.status }
-                          clearError={ authClear }/> }
+  render() {
+    const { handleSubmit, submitting, auth, authClear } = this.props;
+    const { error } = auth;
 
-        <form onSubmit={ handleSubmit(this.handleSubmit) }>
-          <div className={ styles.row }>
+    const formInputClasses = {
+      containerClassName: styles.inputContainer,
+      inputClassName: styles.input,
+      warningClassName: styles.fieldWarning,
+      notValidClassName: styles.notValid,
+      validClassName: styles.valid,
+    };
+
+    return (
+      <div className={styles.signUpFormContainer}>
+        {error && <Error data={error.data}
+                         status={error.status}
+                         clearError={authClear}/>}
+
+        <form onSubmit={handleSubmit( this.handleSubmit )}>
+          <div className={styles.row}>
             <Field
               name='firstName'
-              classes={ formInputClasses }
-              component={ FormInput }
+              {...formInputClasses}
+              component={FormInput}
               type='text'
               label='First name'
             />
             <Field
               name='lastName'
-              classes={ formInputClasses }
-              component={ FormInput }
+              {...formInputClasses}
+              component={FormInput}
               type='text'
               label='Last name'
             />
           </div>
-          <div className={ styles.row }>
+          <div className={styles.row}>
             <Field
               name='displayName'
-              classes={ formInputClasses }
-              component={ FormInput }
+              {...formInputClasses}
+              component={FormInput}
               type='text'
               label='Display Name'
             />
             <Field
               name='email'
-              classes={ formInputClasses }
-              component={ FormInput }
+              {...formInputClasses}
+              component={FormInput}
               type='text'
               label='Email Address'
             />
           </div>
-          <div className={ styles.row }>
+          <div className={styles.row}>
             <Field
               name='password'
-              classes={ formInputClasses }
-              component={ FormInput }
+              {...formInputClasses}
+              component={FormInput}
               type='password'
               label='Password'
             />
             <Field
               name='confirmPassword'
-              classes={ formInputClasses }
-              component={ FormInput }
+              {...formInputClasses}
+              component={FormInput}
               type='password'
               label='Password confirmation'
             />
           </div>
-          <div className={ styles.choseRoleContainer }>
-            <Field name='role' type='radio' value={ CONSTANTS.CUSTOMER }
+          <div className={styles.choseRoleContainer}>
+            <Field name='role' type='radio' value={CONSTANTS.CUSTOMER}
                    strRole='Join As a Buyer'
                    infoRole='I am looking for a Name, Logo or Tagline for my business, brand or product.'
-                   component={ RoleInput } id={ CONSTANTS.CUSTOMER }/>
-            <Field name='role' type='radio' value={ CONSTANTS.CREATOR }
+                   component={RoleInput} id={CONSTANTS.CUSTOMER}/>
+            <Field name='role' type='radio' value={CONSTANTS.CREATOR}
                    strRole='Join As a Creative'
                    infoRole='I plan to submit name ideas, Logo designs or sell names in Domain Marketplace.'
-                   component={ RoleInput } id={ CONSTANTS.CREATOR }/>
+                   component={RoleInput} id={CONSTANTS.CREATOR}/>
           </div>
-          <div className={ styles.termsOfService }>
+          <div className={styles.termsOfService}>
             <Field
               name='agreeOfTerms'
-              classes={ {
+              classes={{
                 container: styles.termsOfService,
                 warning: styles.fieldWarning,
-              } }
+              }}
               id='termsOfService'
-              component={ AgreeTermOfServiceInput }
+              component={AgreeTermOfServiceInput}
               type='checkbox'
             />
 
           </div>
-          <button type='submit' disabled={ submitting }
-                  className={ styles.submitContainer }>
-            <span className={ styles.inscription }>Create Account</span>
+          <button type='submit' disabled={submitting}
+                  className={styles.submitContainer}>
+            <span className={styles.inscription}>Create Account</span>
           </button>
         </form>
       </div>
@@ -127,7 +129,7 @@ class RegistrationForm extends React.Component{
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ( state ) => {
   return {
     auth: state.auth,
     initialValues: {
@@ -136,14 +138,14 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => (
+const mapDispatchToProps = ( dispatch ) => (
   {
-    signUp: (data) => dispatch(authActionRegister(data)),
-    authClear: () => dispatch(clearAuth()),
+    signUp: ( data ) => dispatch( authActionRegister( data ) ),
+    authClear: () => dispatch( clearAuth() ),
   }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(reduxForm({
+export default connect( mapStateToProps, mapDispatchToProps )( reduxForm( {
   form: 'login',
-  validate: customValidator(Schemes.RegistrationSchem),
-})(RegistrationForm));
+  validate: customValidator( Schemes.RegistrationSchem ),
+} )( RegistrationForm ) );

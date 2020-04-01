@@ -23,11 +23,11 @@ class LoginForm extends React.Component {
     const { handleSubmit, submitting, authClear } = this.props;
 
     const formInputClasses = {
-      container: styles.inputContainer,
-      input: styles.input,
-      warning: styles.fieldWarning,
-      notValid: styles.notValid,
-      valid: styles.valid,
+      containerClassName: styles.inputContainer,
+      inputClassName: styles.input,
+      warningClassName: styles.fieldWarning,
+      notValidClassName: styles.notValid,
+      validClassName: styles.valid,
     };
 
     return (
@@ -41,14 +41,14 @@ class LoginForm extends React.Component {
         <form onSubmit={handleSubmit( this.handleSubmit )}>
           <Field
             name='email'
-            classes={formInputClasses}
+            {...formInputClasses}
             component={FormInput}
             type='text'
             label='Email Address'
           />
           <Field
             name='password'
-            classes={formInputClasses}
+            {...formInputClasses}
             component={FormInput}
             type='password'
             label='password'
