@@ -14,10 +14,6 @@ const RegistrationPage = ( props ) => {
 
   props.clearError();
 
-  const changeRoute = () => {
-    props.history.replace('/');
-  };
-
   const faqElements = faq.map( ( question, index ) => (
       <div key={index}>
         <div className={styles.headerArticle}>{question.head}
