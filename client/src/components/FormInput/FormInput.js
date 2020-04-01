@@ -1,7 +1,6 @@
 import React      from 'react';
 import classNames from 'classnames';
 import PropTypes  from 'prop-types';
-import styles     from "../LoginForm/LoginForm.module.sass";
 
 const FormInput = ( props ) => {
 
@@ -33,7 +32,7 @@ const FormInput = ( props ) => {
 
 FormInput.propTypes = {
   label: PropTypes.string,
-  input: PropTypes.string,
+  input: PropTypes.object,
   type: PropTypes.string,
 
   containerClassName: PropTypes.string,
