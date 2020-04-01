@@ -3,14 +3,16 @@ import Logo                         from '../../components/Logo';
 import RegistrationForm             from '../../components/RegistrationForm/RegistrationForm';
 import styles                       from './RegistrationPage.module.sass';
 import { Link }                     from 'react-router-dom';
-import { connect }                  from 'react-redux';
-import { clearErrorSignUpAndLogin } from '../../actions/actionCreator';
-import CONSTANTS                    from '../../constants';
+import { connect }                             from 'react-redux';
+import { clearAuth, clearErrorSignUpAndLogin } from '../../actions/actionCreator';
+import CONSTANTS                               from '../../constants';
 import faq                          from './faq.json'
 import Question                     from "../../components/Question";
+import Error                        from "../../components/Error/Error";
 
 
 const RegistrationPage = ( props ) => {
+
 
   props.clearError();
 
@@ -18,9 +20,7 @@ const RegistrationPage = ( props ) => {
       <Question key={index}
                 body={question.body}
                 head={question.head}
-                headerClassName={styles.headerArticle}
-                bodyClassName={styles.article}/>
-    )
+                className={styles.questionsContainer}/>)
   );
 
   return (
@@ -43,9 +43,10 @@ const RegistrationPage = ( props ) => {
             We always keep your name and email address private.
           </h4>
         </div>
+        <div>
 
-        <RegistrationForm/>
-
+          <RegistrationForm/>
+        </div>
       </div>
       <div className={styles.footer}>
         <div className={styles.articlesMainContainer}>
@@ -66,8 +67,10 @@ const RegistrationPage = ( props ) => {
   );
 };
 
+
 const mapDispatchToProps = ( dispatch ) => {
   return {
+    authClear: () => dispatch( clearAuth() ),
     clearError: () => dispatch( clearErrorSignUpAndLogin() ),
   };
 };

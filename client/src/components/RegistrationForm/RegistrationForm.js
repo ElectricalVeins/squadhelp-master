@@ -30,24 +30,24 @@ class RegistrationForm extends React.Component {
   };
 
   render() {
-    const { handleSubmit, submitting, auth, authClear } = this.props;
-    const { error } = auth;
+    const { handleSubmit, submitting, authClear,auth:{error} } = this.props;
 
     const formInputClasses = {
-      containerClassName: styles.inputContainer,
-      inputClassName: styles.input,
-      warningClassName: styles.fieldWarning,
-      notValidClassName: styles.notValid,
-      validClassName: styles.valid,
+      containerStyles: styles.inputContainer,
+      inputStyles: styles.input,
+      warningStyles: styles.fieldWarning,
+      invalidStyles: styles.notValid,
+      validStyles: styles.valid,
     };
 
     return (
-      <div className={styles.signUpFormContainer}>
+      <>
         {error && <Error data={error.data}
                          status={error.status}
                          clearError={authClear}/>}
 
-        <form onSubmit={handleSubmit( this.handleSubmit )}>
+        <form className={styles.signUpFormContainer}
+              onSubmit={handleSubmit( this.handleSubmit )}>
           <div className={styles.row}>
             <Field
               name='firstName'
@@ -124,7 +124,7 @@ class RegistrationForm extends React.Component {
             <span className={styles.inscription}>Create Account</span>
           </button>
         </form>
-      </div>
+      </>
     );
   }
 }
