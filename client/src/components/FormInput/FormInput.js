@@ -6,25 +6,25 @@ const FormInput = ( props ) => {
 
   const {
     label, input, type,
-    containerClassName,
-    inputClassName,
-    warningClassName,
-    notValidClassName,
-    validClassName,
+    containerStyles,
+    inputStyles,
+    warningStyles,
+    invalidStyles,
+    validStyles,
     meta: { touched, error }
   } = props;
 
-  const computedInputClassName = classNames( inputClassName, {
-    [ notValidClassName ]: touched && error,
-    [ validClassName ]: touched && !error,
+  const computedInputStyles = classNames( inputStyles, {
+    [ invalidStyles ]: touched && error,
+    [ validStyles ]: touched && !error,
   } );
 
   return (
-    <div className={containerClassName}>
+    <div className={containerStyles}>
       <input {...input} placeholder={label} type={type}
-             className={computedInputClassName}/>
-      {warningClassName && ( touched &&
-        ( error && <span className={warningClassName}>{error}</span> ) )}
+             className={computedInputStyles}/>
+      {warningStyles && ( touched &&
+        ( error && <span className={warningStyles}>{error}</span> ) )}
     </div>
   );
 };
@@ -35,11 +35,11 @@ FormInput.propTypes = {
   input: PropTypes.object,
   type: PropTypes.string,
 
-  containerClassName: PropTypes.string,
-  inputClassName: PropTypes.string,
-  warningClassName: PropTypes.string,
-  notValidClassName: PropTypes.string,
-  validClassName: PropTypes.string,
+  containerStyles: PropTypes.string,
+  inputStyles: PropTypes.string,
+  warningStyles: PropTypes.string,
+  invalidStyles: PropTypes.string,
+  validStyles: PropTypes.string,
 };
 
 export default FormInput;
