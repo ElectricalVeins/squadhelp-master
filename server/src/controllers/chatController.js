@@ -1,10 +1,10 @@
-const Conversation = require('../models/mongoModels/conversation');
-const Message = require('../models/mongoModels/Message');
-const Catalog = require('../models/mongoModels/Catalog');
+const Conversation = require('../dbs/models/mongoModels/conversation');
+const Message = require('../dbs/models/mongoModels/Message');
+const Catalog = require('../dbs/models/mongoModels/Catalog');
 const moment = require('moment');
-const db = require('../models/index');
+const db = require('../dbs/models');
 const userQueries = require('./queries/userQueries');
-const controller = require('../../socketInit');
+const controller = require('../socketInit');
 const _ = require('lodash');
 
 module.exports.addMessage = async (req, res, next) => {
