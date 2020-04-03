@@ -1,16 +1,17 @@
-import React                        from 'react';
-import LoginForm                    from '../../components/LoginForm/LoginForm';
-import Logo                         from '../../components/Logo';
-import styles                       from './LoginPage.module.sass';
-import { Link }                     from 'react-router-dom';
-import { connect }                  from 'react-redux';
-import { clearErrorSignUpAndLogin } from '../../actions/actionCreator';
-import CONSTANTS                    from '../../constants';
-import Error                        from "../../components/Error/Error";
+import React                                                    from 'react';
+import LoginForm
+                                                                from '../../components/LoginForm/LoginForm';
+import Logo                                                     from '../../components/Logo';
+import styles                                                   from './LoginPage.module.sass';
+import { Link }                                                 from 'react-router-dom';
+import { connect }                                              from 'react-redux';
+import { authActionLogin, clearAuth, clearErrorSignUpAndLogin } from '../../actions/actionCreator';
+import CONSTANTS                                                from '../../constants';
+import Error                                                    from "../../components/Error/Error";
 
 const LoginPage = ( props ) => {
 
-  const { auth: { error }, authClear } = props;
+  const {  error, isFetching, authClear, loginRequest } = props;
 
   return (
     <div className={styles.mainContainer}>
@@ -19,7 +20,7 @@ const LoginPage = ( props ) => {
           <Logo src={`${CONSTANTS.STATIC_IMAGES_PATH}logo.png`} alt="logo"/>
           <div className={styles.linkLoginContainer}>
             <Link to='/registration'
-                  style={{ textDecoration: 'none' }}><span>Signup</span></Link>
+                  style={{ textDecoration: 'none' }}><span>SignUp</span></Link>
           </div>
         </div>
         <div className={styles.loginFormContainer}>
@@ -30,7 +31,7 @@ const LoginPage = ( props ) => {
                               status={error.status}
                               clearError={authClear}/>
             }
-            <LoginForm/>
+            <LoginForm isFetching={isFetching} onSubmit={loginRequest}/>
           </div>
         </div>
       </div>
@@ -40,13 +41,16 @@ const LoginPage = ( props ) => {
 };
 
 const mapStateToProps = ( state ) => {
-  const { auth } = state;
-  return { auth };
+  return {
+    ...state.auth
+  }
 };
 
 const mapDispatchToProps = ( dispatch ) => {
   return {
     clearError: () => dispatch( clearErrorSignUpAndLogin() ),
+    loginRequest: ( data ) => dispatch( authActionLogin( data ) ),
+    authClear: () => dispatch( clearAuth() ),
   };
 };
 
