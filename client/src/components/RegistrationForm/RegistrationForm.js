@@ -8,69 +8,55 @@ import AgreeTermOfServiceInput
 import CONSTANTS            from '../../constants';
 import customValidator      from '../../validators/validator';
 import Schemes              from '../../validators/validationSchems';
+import FormError            from "../FieldError";
 
 const RegistrationForm = props => {
-
   const { handleSubmit, submitting } = props;
 
-  const formInputClasses = {
-    containerStyles: styles.inputContainer,
+  const formInputStyles = {
     inputStyles: styles.input,
-    warningStyles: styles.fieldWarning,
     invalidStyles: styles.notValid,
     validStyles: styles.valid,
   };
 
+  const renderField = ( field ) => (
+    <label className={styles.inputContainer}>
+      <FormInput {...field} {...formInputStyles}/>
+      <FormError meta={field.meta} className={styles.fieldWarning}/>
+    </label>
+  );
   return (
     <form className={styles.signUpFormContainer}
           onSubmit={handleSubmit}>
       <div className={styles.row}>
-        <Field
-          name='firstName'
-          {...formInputClasses}
-          component={FormInput}
-          type='text'
-          label='First name'
-        />
-        <Field
-          name='lastName'
-          {...formInputClasses}
-          component={FormInput}
-          type='text'
-          label='Last name'
-        />
+        <Field name='firstName'
+               type='text'
+               placeholder='First name'
+               component={renderField}/>
+        <Field name='lastName'
+               type='text'
+               placeholder='Last name'
+               component={renderField}/>
       </div>
       <div className={styles.row}>
-        <Field
-          name='displayName'
-          {...formInputClasses}
-          component={FormInput}
-          type='text'
-          label='Display Name'
-        />
-        <Field
-          name='email'
-          {...formInputClasses}
-          component={FormInput}
-          type='text'
-          label='Email Address'
-        />
+        <Field name='displayName'
+               type='text'
+               placeholder='Display Name'
+               component={renderField}/>
+        <Field name='email'
+               type='text'
+               placeholder='Email Address'
+               component={renderField}/>
       </div>
       <div className={styles.row}>
-        <Field
-          name='password'
-          {...formInputClasses}
-          component={FormInput}
-          type='password'
-          label='Password'
-        />
-        <Field
-          name='confirmPassword'
-          {...formInputClasses}
-          component={FormInput}
-          type='password'
-          label='Password confirmation'
-        />
+        <Field name='password'
+               type='password'
+               placeholder='Password'
+               component={renderField}/>
+        <Field name='confirmPassword'
+               type='password'
+               placeholder='Password confirmation'
+               component={renderField}/>
       </div>
       <div className={styles.choseRoleContainer}>
         <Field name='role' type='radio' value={CONSTANTS.CUSTOMER}
@@ -91,8 +77,7 @@ const RegistrationForm = props => {
           }}
           id='termsOfService'
           component={AgreeTermOfServiceInput}
-          type='checkbox'
-        />
+          type='checkbox'/>
 
       </div>
       <button type='submit'
@@ -106,6 +91,9 @@ const RegistrationForm = props => {
 
 
 export default reduxForm( {
-  form: 'login',
+  form: 'register',
+  initialValues: {
+    role: CONSTANTS.CUSTOMER,
+  },
   validate: customValidator( Schemes.RegistrationSchem ),
 } )( RegistrationForm );

@@ -18,7 +18,7 @@ import _           from 'lodash';
 
 const RegistrationPage = ( props ) => {
 
-  const { authClear, initialValues, error, signUp } = props;
+  const { authClear,  error, signUp } = props;
 
   const faqElements = faq.map( ( question, index ) => (
     <Question key={index}
@@ -57,7 +57,7 @@ const RegistrationPage = ( props ) => {
                            status={error.status}
                            clearError={authClear}/>}
 
-          <RegistrationForm onSubmit={handleSubmit} initialValues={initialValues}/>
+          <RegistrationForm onSubmit={handleSubmit} />
         </div>
       </div>
       <div className={styles.footer}>
@@ -82,10 +82,7 @@ const RegistrationPage = ( props ) => {
 
 const mapStateToProps = ( state ) => {
   return {
-    ...state.auth,
-    initialValues: {
-      role: CONSTANTS.CUSTOMER,
-    },
+    ...state.auth
   };
 };
 

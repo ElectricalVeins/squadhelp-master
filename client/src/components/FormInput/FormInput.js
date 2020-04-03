@@ -5,39 +5,34 @@ import PropTypes  from 'prop-types';
 const FormInput = ( props ) => {
 
   const {
-    label, input, type,
-    containerStyles,
+    placeholder,
+    input, type,
     inputStyles,
-    warningStyles,
     invalidStyles,
     validStyles,
-    meta: { touched, error }
+    meta: { touched, error },
   } = props;
-
+console.log(input)
   const computedInputStyles = classNames( inputStyles, {
     [ invalidStyles ]: touched && error,
     [ validStyles ]: touched && !error,
   } );
 
   return (
-    <div className={containerStyles}>
-      <input {...input} placeholder={label} type={type}
+      <input {...input}
+             placeholder={placeholder}
+             type={type}
              className={computedInputStyles}/>
-      {warningStyles && ( touched &&
-        ( error && <span className={warningStyles}>{error}</span> ) )}
-    </div>
   );
 };
 
 
 FormInput.propTypes = {
-  label: PropTypes.string,
+  placeholder: PropTypes.string,
   input: PropTypes.object,
   type: PropTypes.string,
 
-  containerStyles: PropTypes.string,
   inputStyles: PropTypes.string,
-  warningStyles: PropTypes.string,
   invalidStyles: PropTypes.string,
   validStyles: PropTypes.string,
 };
