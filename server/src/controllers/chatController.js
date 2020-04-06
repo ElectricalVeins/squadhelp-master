@@ -12,9 +12,7 @@ module.exports.addMessage = async (req, res, next) => {
   participants.sort(
     (participant1, participant2) => participant1 - participant2);
   try {
-    const newConversation = await Conversation.findOneAndUpdate({
-        participants,
-      },
+    const newConversation = await Conversation.findOneAndUpdate({ participants },
       { participants, blackList: [false, false], favoriteList: [false, false] },
       {
         upsert: true,
