@@ -169,6 +169,13 @@ const Home = (props) => {
                             <img src={`${CONSTANTS.STATIC_IMAGES_PATH}gif/3-compressed.gif`} alt="compressed"/>
                         </div>
                     </div>
+                    <div className={styles.blueTip}>
+                        <span>Ready to get started? Launch a contest and start receiving submissions instantly.</span>
+                        <Link  to="/startContest">
+                            <i className="far fa-lightbulb mr-1"/>
+                            Start A Contest
+                        </Link>
+                   </div>
                     <div className={styles.headerBar}>
                         <h3>Names For Sale</h3>
                         <p className={styles.blueUnderline}>Not interested in launching a contest?
