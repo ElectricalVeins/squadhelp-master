@@ -43,7 +43,7 @@ const TransactionHistory = props => {
       <div className={styles.pageWrapper}>
           {
             data ? <TransactionTable data={data} className={styles.tableContainer}/>
-                 : ( <div style={{ textAlign: 'center' }}>You don't have a transactions yet</div> )
+                 : ( <div style={{ textAlign: 'center' }}>You don't have any transactions yet</div> )
           }
         <Link to='/dashboard' className={styles.link}>Back to Dashboard</Link>
       </div>
