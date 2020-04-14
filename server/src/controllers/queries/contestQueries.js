@@ -49,3 +49,12 @@ module.exports.createOffer = async (data) => {
     return result.get({ plain: true });
   }
 };
+
+module.exports.queryOffersFiles = async (queryObject)=>{
+  const result = await bd.Offers.findAll(queryObject)
+  if(result){
+    return result
+  }else{
+    throw new ServerError('cannot get Offers')
+  }
+}

@@ -1,12 +1,13 @@
 const db = require('../dbs/models');
 import ServerError from '../errors/ServerError';
-
+const { Op } = require('sequelize');
 const contestQueries = require('./queries/contestQueries');
 const userQueries = require('./queries/userQueries');
 const controller = require('../socketInit');
 const UtilFunctions = require('../utils/functions');
 const NotFound = require('../errors/UserNotFoundError');
 const CONSTANTS = require('../constants');
+const moment = require('moment');
 
 module.exports.dataForContest = async (req, res, next) => {
   let response = {};
@@ -119,6 +120,26 @@ module.exports.updateContest = async (req, res, next) => {
     });
     res.send(updatedContest);
   } catch (e) {
+    next(e);
+  }
+};
+
+module.exports.getOffersFiles = async (req, res, next) => {
+  try {
+    const queryFilter={
+      where: {
+        fileName: { [ Op.not ]: null },
+      },
+    };
+
+    if(req.body.from) {
+      queryFilter.where.createdAt={ [ Op.gte ]: moment(req.body.from).format() };
+    }
+
+    const result = await contestQueries.queryOffersFiles(queryFilter);
+    res.send(result);
+  }
+  catch(e){
     next(e);
   }
 };

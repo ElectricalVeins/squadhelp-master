@@ -76,6 +76,9 @@ router.post(
   contestController.updateContest,
 );
 
+router.get('/get_offers_files',
+  contestController.getOffersFiles);
+
 router.post(
   '/setNewOffer',
   checkToken.checkToken,
