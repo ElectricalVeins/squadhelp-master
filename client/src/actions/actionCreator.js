@@ -436,3 +436,18 @@ export const changeModalShow=(data)=>{
         data: data
     }
 };
+
+export const createAddContestTypeAction = data => ({
+    type: ACTION.ADD_CONTEST_TYPE,
+    data
+})
+
+export const createRemoveContestTypeAction = data =>({
+    type: ACTION.REMOVE_CONTEST_TYPE,
+    data
+})
+
+export const createToggleContestTypeAction = data =>({
+    type: ACTION.TOGGLE_CONTEST_TYPE,
+    data
+})
