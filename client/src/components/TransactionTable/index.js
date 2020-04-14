@@ -1,5 +1,6 @@
 import React     from 'react';
 import PropTypes from 'prop-types';
+import CONSTANTS from "../../constants";
 
 const TransactionTable = props => {
   const { data, className } = props;
@@ -14,14 +15,15 @@ const TransactionTable = props => {
             <td>{transaction.id}</td>
             <td>
               {
-                transaction.isIncome ? 'Income'
-                                     : 'Expense'
+                transaction.type === CONSTANTS.INCOME && 'Income'
+              }
+              {
+                transaction.type === CONSTANTS.EXPENSE && 'Expense'
               }
             </td>
             <td>
               {
-                transaction.isIncome ? `+${transaction.sum}$`
-                                     : `-${transaction.sum}$`
+                `${transaction.sum}$`
               }
             </td>
           </tr> ) )
