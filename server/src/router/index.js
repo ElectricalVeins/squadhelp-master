@@ -182,4 +182,12 @@ router.post(
   chatController.getCatalogs,
 );
 
+router.get('/getUserTransactions',
+  checkToken.checkToken,
+  userController.getUserTransactions);
+
+router.get('/getUserStatement',
+  checkToken.checkToken,
+  userController.getUserStatement);
+
 module.exports = router;
