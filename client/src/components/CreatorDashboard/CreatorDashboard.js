@@ -127,6 +127,7 @@ class CreatorDashboard extends React.Component {
             if (creatorFilter[el])
                 obj[el] = creatorFilter[el];
         });
+        console.log('parseParamsToUrl',obj)
         this.props.history.push('/Dashboard?' + queryString.stringify(obj));
     };
 

@@ -73,6 +73,7 @@ export const payRequest = (data) => {
 
 
 export const getContestsForCreative = (data) => {
+    console.log('Action data',data)
     return {
         type: ACTION.GET_CONTESTS_FOR_CREATIVE,
         data: data
