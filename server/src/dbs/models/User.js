@@ -79,7 +79,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   User.associate = function (models) {
-    User.hasMany(models.TransactionHistory, {
+    User.hasMany(models.Transactions, {
       foreignKey: 'userId',
     });
   };
