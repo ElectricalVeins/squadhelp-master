@@ -76,7 +76,8 @@ router.post(
   contestController.updateContest,
 );
 
-router.get('/get_offers_files',
+router.get('/getOffersFiles',
+  basicMiddlewares.createQueryFilter,
   contestController.getOffersFiles);
 
 router.post(

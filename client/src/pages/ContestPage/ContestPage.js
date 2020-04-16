@@ -103,12 +103,32 @@ class ContestPage extends React.Component {
         });
     };
 
+    checkOfferTab = () => {
+        const { role } = this.props.userStore.data;
+        const { contestByIdStore, changeContestViewMode } = this.props;
+        const { isBrief } = contestByIdStore;
+        const offerTab = ( <span onClick={() => changeContestViewMode( false )}
+                                 className={classNames( styles.btn,
+                                   { [ styles.activeBtn ]: !isBrief } )}>Offer</span> )
+
+        return ( <>
+            {
+                role === CONSTANTS.CREATOR && offerTab
+            }
+            {
+                role === CONSTANTS.CUSTOMER &&
+                contestByIdStore.offers &&
+                contestByIdStore.offers.length !== 0 &&
+                offerTab
+            }
+        </> )
+    }
+
     render() {
         const {role} = this.props.userStore.data;
         const {contestByIdStore, changeShowImage, changeContestViewMode, getData, clearSetOfferStatusError} = this.props;
         const {isShowOnFull, imagePath, error, isFetching, isBrief, contestData, offers, setOfferStatusError} = contestByIdStore;
-        const offerTab = ( <span onClick={() => changeContestViewMode( false )}
-                                 className={classNames( styles.btn, { [ styles.activeBtn ]: !isBrief } )}>Offer</span> )
+
         return (
             <div>
                 {/*<Chat/>*/}
@@ -130,14 +150,7 @@ class ContestPage extends React.Component {
                         <span onClick={() => changeContestViewMode(true)}
                               className={classNames(styles.btn, {[styles.activeBtn]: isBrief})}>Brief</span>
                                       {
-                                        role===CONSTANTS.CREATOR && offerTab
-                                      }
-                                      {
-                                        role===CONSTANTS.CUSTOMER &&
-                                        contestByIdStore.offers &&
-                                        contestByIdStore.offers.length !== 0
-                                        ? offerTab
-                                        : null
+                                     this.checkOfferTab()
                                       }
                                     </div>
                                     {

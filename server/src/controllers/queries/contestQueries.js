@@ -51,10 +51,10 @@ module.exports.createOffer = async (data) => {
 };
 
 module.exports.queryOffersFiles = async (queryObject)=>{
-  const result = await bd.Offers.findAll(queryObject)
-  if(result){
-    return result
+  const result = await bd.Offers.findAll(queryObject);
+  if(result.length !== 0){
+    return result;
   }else{
-    throw new ServerError('cannot get Offers')
+    throw new ServerError('offers was not found');
   }
-}
+};

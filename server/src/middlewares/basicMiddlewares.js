@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+const moment = require('moment');
 const bd = require('../dbs/models');
 const NotFound = require('../errors/UserNotFoundError');
 const RightsError = require('../errors/RightsError');
@@ -112,6 +114,23 @@ module.exports.canUpdateContest = async (req, res, next) => {
     if ( !result) {
       return next(new RightsError());
     }
+    next();
+  } catch (e) {
+    next(new ServerError());
+  }
+};
+
+module.exports.createQueryFilter = async (req, res, next) => {
+  try{
+    const queryFilter={
+      where: {
+        fileName: { [ Op.not ]: null },
+      },
+    };
+    if(req.body.from) {
+      queryFilter.where.createdAt={ [ Op.gte ]: moment(req.body.from).format() };
+    }
+    req.body.queryFilter = queryFilter;
     next();
   } catch (e) {
     next(new ServerError());
