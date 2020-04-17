@@ -224,19 +224,17 @@ module.exports.getUserTransactions = async (req, res, next) => {
 module.exports.getUserStatement = async (req, res, next) => {
   try {
     const { tokenData: { userId } } = req;
-    const result = await transactionQueries.getHistoryByUserId(userId);
+    const result = await transactionQueries.getStatementByUserId(userId);
 
-    const statement = {
+    const statement={
       income: 0,
       expense: 0,
     };
-    for (const line of result){  // <- Я не уверен, что это хорошая идея - считать это тут и с помощью js
-      if(line.typeOperation === 'income'){
-        statement.income += +line.sum;
-      } else{
-        statement.expense += +line.sum;
-      }
-    }
+
+    result.forEach((item)=>{
+      const [operationTypeValue, sumValue] = Object.values(item);
+      statement[operationTypeValue] = sumValue;
+    });
     res.send(statement);
   } catch (e) {
     next(e);
