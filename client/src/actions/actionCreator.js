@@ -452,3 +452,12 @@ export const createToggleContestTypeAction = data =>({
     type: ACTION.TOGGLE_CONTEST_TYPE,
     data
 })
+
+export const createGetTransactionsRequest = () =>
+  ( { type: ACTION.GET_TRANSACTIONS_REQUEST } )
+
+export const createGetStatementRequest = () =>
+  ( { type: ACTION.GET_STATEMENT_REQUEST } )
+
+export const createClearErrorAction = () =>
+  ({type:ACTION.CLEAR_TRANSACTION_ERROR})

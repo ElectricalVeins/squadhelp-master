@@ -2,6 +2,7 @@ const db = require('../dbs/models');
 const ServerError =require('../errors/ServerError');
 const contestQueries = require('./queries/contestQueries');
 const userQueries = require('./queries/userQueries');
+const transactionQueries = require('./queries/transactionQueries');
 const controller = require('../socketInit');
 const UtilFunctions = require('../utils/functions');
 const NotFound = require('../errors/UserNotFoundError');
@@ -188,6 +189,13 @@ const resolveOffer = async (
   }, {
     contestId: contestId,
   }, transaction);
+
+  const savedTransaction = await transactionQueries.addIncomeTransaction({
+    userId: creatorId, //<---------------------------------------------------------------?
+    typeOperation: 'income',
+    sum: finishedContest.prize,
+  });
+
   transaction.commit();
   const arrayRoomsId = [];
   updatedOffers.forEach(offer => {
@@ -219,6 +227,7 @@ module.exports.setOfferStatus = async (req, res, next) => {
       const winningOffer = await resolveOffer(req.body.contestId,
         req.body.creatorId, req.body.orderId, req.body.offerId,
         req.body.priority, transaction);
+      ///////////////////////////////////////////////////////////////////////////
       res.send(winningOffer);
     } catch (err) {
       transaction.rollback();

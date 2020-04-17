@@ -31,3 +31,19 @@ module.exports.getStatementByUserId = async (userId) => {
   }
   throw new NotFound('transactions are not found');
 };
+
+module.exports.addIncomeTransaction = async (transaction) => {
+  const result = await bd.Transactions.create(transaction);
+  if(result) {
+    return result;
+  }
+  throw new ServerError('cannot create new income transaction');
+};
+
+module.exports.addExpenseTransaction = async (transaction) => {
+  const result = await bd.Transactions.create(transaction);
+  if(result) {
+    return result;
+  }
+  throw new ServerError('cannot create new consumption transaction');
+};

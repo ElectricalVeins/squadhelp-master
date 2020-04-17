@@ -193,16 +193,23 @@ module.exports.cashout = async (req, res, next) => {
                     THEN "balance"-${ req.body.sum }
                  END
                 `),
+    },
+    {
+      cardNumber: {
+        [ bd.sequelize.Op.in ]: [
+          CONSTANTS.SQUADHELP_BANK_NUMBER,
+          req.body.number.replace(/ /g, ''),
+        ],
       },
-      {
-        cardNumber: {
-          [ bd.sequelize.Op.in ]: [
-            CONSTANTS.SQUADHELP_BANK_NUMBER,
-            req.body.number.replace(/ /g, ''),
-          ],
-        },
-      },
-      transaction);
+    },
+    transaction);
+
+    const savedTransaction = await transactionQueries.addExpenseTransaction({
+      typeOperation: 'expense',
+      sum: req.body.sum,
+      userId: updatedUser.id,
+    });
+
     transaction.commit();
     res.send({ balance: updatedUser.balance });
   } catch (err) {

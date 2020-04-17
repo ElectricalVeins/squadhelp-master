@@ -1,55 +1,80 @@
-import React            from 'react';
-import styles           from './TransactionHistory.module.sass'
-import PropTypes        from 'prop-types';
-import TransactionTable from "../../components/TransactionTable";
-import Header           from "../../components/Header/Header";
-import { Link }         from "react-router-dom";
-import CONSTANTS from '../../constants'
-
-
-const data = [
-  {
-    id: 1,
-    type: CONSTANTS.INCOME,
-    sum: 350
-  },
-  {
-    id: 2,
-    type: CONSTANTS.EXPENSE,
-    sum: -350
-  },
-  {
-    id: 3,
-    type: CONSTANTS.INCOME,
-    sum: 700
-  },
-  {
-    id: 4,
-    type: CONSTANTS.EXPENSE,
-    sum: -450
-  },
-  {
-    id: 5,
-    type: CONSTANTS.EXPENSE,
-    sum: -750
-  },
-]
+import React, { useEffect } from 'react';
+import styles               from './TransactionHistory.module.sass'
+import TransactionTable     from "../../components/TransactionTable";
+import Header               from "../../components/Header/Header";
+import { Link }             from "react-router-dom";
+import { connect }          from "react-redux";
+import {
+  createClearErrorAction,
+  createGetStatementRequest,
+  createGetTransactionsRequest
+}                           from "../../actions/actionCreator";
+import Spinner              from "../../components/Spinner/Spinner";
+import Error                from "../../components/Error/Error";
 
 const TransactionHistory = props => {
+  const { getStatement, getTransactions, transactions, statement: { income, expense }, isFetchingTransactions, isFetchingStatement, error, clearError } = props
+
+  useEffect( () => {
+    getTransactions();
+    getStatement();
+  }, [] )
+
+  const statementRender = () => (
+    <div className={styles.statement}>
+      <p>
+        <span>Total Income:</span>
+        <span>
+          {
+            income ? `${income}$` : '0$'
+          }
+        </span>
+      </p>
+      <p>
+        <span>Total expense:</span>
+        <span>
+          {
+            expense ? `${expense}$` : '0$'
+          }
+        </span>
+      </p>
+    </div>
+  )
+
+  const tableRender = () => ( <>
+    {
+      transactions.length !== 0 &&
+      ( <TransactionTable data={transactions}
+                          className={styles.tableContainer}/> )
+    }
+  </> )
+
   return (
     <>
       <Header/>
       <div className={styles.pageWrapper}>
-          {
-            data ? <TransactionTable data={data} className={styles.tableContainer}/>
-                 : ( <div style={{ textAlign: 'center' }}>You don't have any transactions yet</div> )
-          }
+        {
+          error && <Error status={error.status} data={error.data} clearError={() => clearError()}/>
+        }
+        {
+          isFetchingStatement && isFetchingTransactions ? <Spinner/>
+                                                        : ( <>
+                                                          {tableRender()}
+                                                          {statementRender()}
+                                                        </> )
+        }
         <Link to='/dashboard' className={styles.link}>Back to Dashboard</Link>
       </div>
     </>
   );
 };
 
-TransactionHistory.propTypes = {};
+const mapStateToProps = state => state.transactions
 
-export default TransactionHistory;
+const mapDispatchToProps = dispatch => ( {
+  getTransactions: () => dispatch( createGetTransactionsRequest() ),
+  getStatement: () => dispatch( createGetStatementRequest() ),
+  clearError: () => dispatch( createClearErrorAction() ),
+} )
+
+export default connect( mapStateToProps, mapDispatchToProps )( TransactionHistory );

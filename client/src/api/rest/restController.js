@@ -43,6 +43,9 @@ export const getContestById = (data) => {
     });
 };
 
+export const getUserTransactions = () => http.get('getUserTransactions')
+
+export const getUserStatement = () => http.get('getUserStatement')
 
 
 
